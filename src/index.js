@@ -1,20 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 
 class Square extends React.Component {
   render() {
     return (
-      <button className="square">
-        {/* TODO */}
+      // 现在每次格子被点击时就会触发传入的 onClick 方法
+      <button className="square" onClick={() => this.props.onClick()}>
+        {this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+  constructor() {
+    // 必须调用 super()方法才能在继承父类的子类中正确获取到类型的 this
+    super()
+    // 每个组件的 state 都是它私有的。
+    this.state = {
+      squares: Array(9).fill(null)
+    }
+  }
   renderSquare(i) {
-    return <Square />;
+    // 通过 props 传递一个父组件当中的事件处理函数到子组件当中
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
