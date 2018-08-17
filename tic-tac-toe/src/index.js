@@ -2,15 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-class Square extends React.Component {
-  render() {
-    return (
-      // 现在每次格子被点击时就会触发传入的 onClick 方法
-      <button className="square" onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
+// class Square extends React.Component {
+//   render() {
+//     return (
+//       // 现在每次格子被点击时就会触发父组件传入的 onClick 方法
+//       <button className="square" onClick={() => this.props.onClick()}>
+//         {this.props.value}
+//       </button>
+//     );
+//   }
+// }
+// 函数定义方式
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  )
 }
 
 class Board extends React.Component {
@@ -21,6 +29,13 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null)
     }
+  }
+  handleClick(i) {
+    // 数组浅复制
+    const squares = this.state.squares.slice()
+    squares[i] = 'X'
+    // 采用替换的方式而不是直接修改原数组
+    this.setState({ squares: squares })
   }
   renderSquare(i) {
     // 通过 props 传递一个父组件当中的事件处理函数到子组件当中
