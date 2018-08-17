@@ -2,16 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-// class Square extends React.Component {
-//   render() {
-//     return (
-//       // 现在每次格子被点击时就会触发父组件传入的 onClick 方法
-//       <button className="square" onClick={() => this.props.onClick()}>
-//         {this.props.value}
-//       </button>
-//     );
-//   }
-// }
 // 函数定义方式
 function Square(props) {
   return (
@@ -20,25 +10,30 @@ function Square(props) {
     </button>
   )
 }
-
+// 类继承方式
 class Board extends React.Component {
   constructor() {
     // 必须调用 super()方法才能在继承父类的子类中正确获取到类型的 this
     super()
     // 每个组件的 state 都是它私有的。
     this.state = {
-      squares: Array(9).fill(null)
+      squares: Array(9).fill(null),
+      xIsNext: true,
     }
   }
   handleClick(i) {
-    // 数组浅复制
     const squares = this.state.squares.slice()
-    squares[i] = 'X'
+    if (calculateWinner(squares) || squares[i]) {
+      return
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O'
     // 采用替换的方式而不是直接修改原数组
-    this.setState({ squares: squares })
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    })
   }
   renderSquare(i) {
-    // 通过 props 传递一个父组件当中的事件处理函数到子组件当中
     return (
       <Square
         value={this.state.squares[i]}
@@ -48,8 +43,13 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: X';
-
+    const winner = calculateWinner(this.state.squares)
+    let status
+    if (winner) {
+      status = 'Winner: ' + winner
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
+    }
     return (
       <div>
         <div className="status">{status}</div>
@@ -89,6 +89,25 @@ class Game extends React.Component {
   }
 }
 
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a]
+    }
+  }
+  return null
+}
 // ========================================
 
 ReactDOM.render(
