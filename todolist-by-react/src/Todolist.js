@@ -1,4 +1,6 @@
 import React from 'react';
+import TodoItem from './TodoItem'
+
 
 class Todolist extends React.Component {
   constructor(props) {
@@ -7,32 +9,53 @@ class Todolist extends React.Component {
       list: [],
       inputValue: ''
     }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
   handleBtnClick() {
-    console.log(this) //undefined
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
-      inputValue: ''
-    })
+    // console.log(this) //undefined
+    if (this.state.inputValue.trim()) {
+      this.setState({
+        list: [...this.state.list, this.state.inputValue],
+        inputValue: ''
+      })
+    }
+
   }
   handleInputChange(e) {
     this.setState({
       inputValue: e.target.value
     })
   }
+
+  handleDelete(index) {
+    const list = [...this.state.list]
+    list.splice(index, 1)
+    this.setState({ list })
+  }
+  getTodoItems() {
+    return (
+      this.state.list.map((item, index) => {
+        return (
+          <TodoItem
+            delete={this.handleDelete}
+            key={index}
+            content={item}
+            index={index}
+          />
+        )
+      })
+    )
+  }
   render() {
     return (
       <div>
         <div>
-          <input value={this.state.inputValue} onChange={this.handleInputChange.bind(this)} />
-          <button onClick={this.handleBtnClick.bind(this)}>add</button>
+          <input value={this.state.inputValue} onChange={this.handleInputChange} />
+          <button onClick={() => this.handleBtnClick()}>add</button>
         </div>
         <ul>
-          {
-            this.state.list.map((item, index) => {
-              return <li key={index}>{item}</li>
-            })
-          }
+          {this.getTodoItems()}
         </ul>
       </div>
     );
