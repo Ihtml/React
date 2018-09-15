@@ -8,34 +8,44 @@ class Todolist extends Component {
       list: [],
       inputValue: ''
     }
+    // this的绑定统一放在constructor里节省性能
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleBtnClick = this.handleBtnClick.bind(this)
   }
   handleBtnClick() {
     // console.log(this) //undefined
     if (this.state.inputValue.trim()) {
-      this.setState({
-        list: [...this.state.list, this.state.inputValue],
+      this.setState((prevState) => ({
+        list: [...prevState.list, prevState.inputValue],
         inputValue: ''
-      })
+      }))
     }
   }
   handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    })
+    // this.setState({
+    //   inputValue: e.target.value
+    // })
+    const value = e.target.value
+    // 异步写法，节省性能
+    this.setState(() => ({
+      inputValue: value
+    }))
   }
   handleDelete(index) {
-    const list = [...this.state.list]
-    list.splice(index, 1)
-    this.setState({ list })
+    this.setState((prevState) => {
+      const list = [...prevState.list]
+      list.splice(index, 1)
+      return { list }
+    })
   }
   getTodoItems() {
     return (
       this.state.list.map((item, index) => {
+        // console.log(this) //Todolist
         return (
           <TodoItem
-            delete={this.handleDelete}
+            deleteItem={this.handleDelete}
             key={index}
             content={item}
             index={index}
@@ -51,7 +61,7 @@ class Todolist extends Component {
         <div>
           <label htmlFor="insertArea">请输入内容: </label>
           <input id="insertArea" value={this.state.inputValue} onChange={this.handleInputChange} />
-          <button onClick={() => this.handleBtnClick()}>add</button>
+          <button onClick={this.handleBtnClick}>add</button>
         </div>
         <ul>
           {this.getTodoItems()}

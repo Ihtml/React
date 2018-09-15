@@ -6,7 +6,8 @@ class TodoItem extends Component {
     this.handleDelete = this.handleDelete.bind(this)
   }
   handleDelete() {
-    this.props.delete(this.props.index)
+    const { deleteItem, index } = this.props
+    deleteItem(index)
   }
   render() {
     const { content } = this.props
