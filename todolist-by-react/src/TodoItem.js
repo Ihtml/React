@@ -6,11 +6,11 @@ class TodoItem extends Component {
     super(props)
     this.handleDelete = this.handleDelete.bind(this)
   }
-  handleDelete () {
+  handleDelete() {
     const { deleteItem, index } = this.props
     deleteItem(index)
   }
-  render () {
+  render() {
     const { content } = this.props
     return (
       <div>{content} <button onClick={this.handleDelete}>X</button></div>
@@ -20,7 +20,7 @@ class TodoItem extends Component {
 // 对传入的props类型进行检测
 TodoItem.propTypes = {
   // content必须传递
-  content: PropTypes.string.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   deleteItem: PropTypes.func,
   index: PropTypes.number
 }
