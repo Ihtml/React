@@ -12,6 +12,7 @@ class Todolist extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleBtnClick = this.handleBtnClick.bind(this)
+    this.handleKeyEnter = this.handleKeyEnter.bind(this)
   }
   handleBtnClick() {
     // console.log(this) //undefined
@@ -39,6 +40,10 @@ class Todolist extends Component {
       return { list }
     })
   }
+  handleKeyEnter(e) {
+    if (e.which && e.which !== 13) return
+    this.handleBtnClick()
+  }
   getTodoItems() {
     return (
       this.state.list.map((item, index) => {
@@ -60,7 +65,7 @@ class Todolist extends Component {
         {/*jsx的注释写法,fragment是占位符*/}
         <div>
           <label htmlFor="insertArea">请输入内容: </label>
-          <input id="insertArea" value={this.state.inputValue} onChange={this.handleInputChange} />
+          <input id="insertArea" value={this.state.inputValue} onChange={this.handleInputChange} onKeyPress={this.handleKeyEnter} />
           <button onClick={this.handleBtnClick}>add</button>
         </div>
         <ul>
