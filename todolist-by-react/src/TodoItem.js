@@ -6,11 +6,19 @@ class TodoItem extends Component {
     super(props)
     this.handleDelete = this.handleDelete.bind(this)
   }
-  handleDelete() {
+  // 父组件数据变化的时候，子组件可以不用更新
+  shouldComponentUpdate (nextProps, nextState) {
+    if (nextProps.content !== this.props.content) {
+      return true
+    } else {
+      return false
+    }
+  }
+  handleDelete () {
     const { deleteItem, index } = this.props
     deleteItem(index)
   }
-  render() {
+  render () {
     const { content } = this.props
     return (
       <div>{content} <button onClick={this.handleDelete}>X</button></div>
