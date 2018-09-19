@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'antd/dist/antd.css'
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
+import store from './store'
 import TodoItem from './TodoItem'
 
 class Todolist extends Component {
@@ -15,8 +16,15 @@ class Todolist extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleBtnClick = this.handleBtnClick.bind(this)
     this.handleKeyEnter = this.handleKeyEnter.bind(this)
+    this.handleStoreChange = this.handleStoreChange.bind(this)
+    // store发生变化时触发handleStoreChange函数
+    store.subscribe(this.handleStoreChange)
   }
-  handleBtnClick () {
+  handleStoreChange() {
+    // 把store里的数据，替换成最新的数据
+    this.setState(store.getState())
+  }
+  handleBtnClick() {
     // console.log(this) //undefined
     if (this.state.inputValue.trim()) {
       this.setState((prevState) => ({
@@ -25,7 +33,7 @@ class Todolist extends Component {
       }))
     }
   }
-  handleInputChange (e) {
+  handleInputChange(e) {
     // this.setState({
     //   inputValue: e.target.value
     // })
@@ -34,19 +42,24 @@ class Todolist extends Component {
     this.setState(() => ({
       inputValue: value
     }))
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value
+    }
+    store.dispatch(action)
   }
-  handleDelete (index) {
+  handleDelete(index) {
     this.setState((prevState) => {
       const list = [...prevState.list]
       list.splice(index, 1)
       return { list }
     })
   }
-  handleKeyEnter (e) {
+  handleKeyEnter(e) {
     if (e.which && e.which !== 13) return
     this.handleBtnClick()
   }
-  getTodoItems () {
+  getTodoItems() {
     return (
       this.state.list.map((item, index) => {
         // console.log(this) //Todolist
@@ -61,14 +74,20 @@ class Todolist extends Component {
       })
     )
   }
-  render () {
+  render() {
     return (
       <Fragment>
         {/*jsx的注释写法,fragment是占位符*/}
-        <div>
+        <div style={{ marginTop: 10, marginLeft: 10 }}>
           <label htmlFor="insertArea">请输入内容: </label>
-          <Input id="insertArea" value={this.state.inputValue} onChange={this.handleInputChange} onKeyPress={this.handleKeyEnter} />
-          <button onClick={this.handleBtnClick}>add</button>
+          <Input
+            id="insertArea"
+            value={this.state.inputValue}
+            onChange={this.handleInputChange}
+            onKeyPress={this.handleKeyEnter}
+            style={{ width: 300, marginRight: 10 }}
+          />
+          <Button type="primary" onClick={this.handleBtnClick}>add</Button>
         </div>
         <ul>
           {this.getTodoItems()}
