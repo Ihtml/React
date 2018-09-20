@@ -4,6 +4,7 @@ const defaultState = {
   list: []
 }
 // reducer可以接收state，但是绝不能修改state
+// reducer必须是纯函数，给定固定的输入，就一定会有固定的输出，而且不会有副作用
 export default (state = defaultState, action) => {
   if (action.type === CHANGE_INPUT_VALUE) {
     // 对之前的state做一次深拷贝

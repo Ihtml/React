@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import 'antd/dist/antd.css'
 import { Input, Button } from 'antd'
 import store from './store'
-import { ADD_TODO_ITEM, CHANGE_INPUT_VALUE, DELETE_TODO_ITEM } from '../src/store/actionTypes'
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction } from '../src/store/actionCreator'
 import TodoItem from './TodoItem'
 
 class Todolist extends Component {
@@ -28,41 +28,16 @@ class Todolist extends Component {
   handleBtnClick () {
     // console.log(this) //undefined
     if (this.state.inputValue.trim()) {
-      this.setState((prevState) => ({
-        list: [...prevState.list, prevState.inputValue],
-        inputValue: ''
-      }))
-      const action = {
-        type: ADD_TODO_ITEM
-      }
+      const action = getAddItemAction()
       store.dispatch(action)
     }
   }
   handleInputChange (e) {
-    // this.setState({
-    //   inputValue: e.target.value
-    // })
-    const value = e.target.value
-    // 异步写法，节省性能
-    this.setState(() => ({
-      inputValue: value
-    }))
-    const action = {
-      type: CHANGE_INPUT_VALUE,
-      value: e.target.value
-    }
+    const action = getInputChangeAction(e.target.value)
     store.dispatch(action)
   }
   handleDelete (index) {
-    this.setState((prevState) => {
-      const list = [...prevState.list]
-      list.splice(index, 1)
-      return { list }
-    })
-    const action = {
-      type: DELETE_TODO_ITEM,
-      index: index
-    }
+    const action = getDeleteItemAction(index)
     store.dispatch(action)
   }
   handleKeyEnter (e) {
