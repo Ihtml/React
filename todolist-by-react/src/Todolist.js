@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import 'antd/dist/antd.css'
 import { Input, Button } from 'antd'
 import store from './store'
+import { ADD_TODO_ITEM, CHANGE_INPUT_VALUE, DELETE_TODO_ITEM } from '../src/store/actionTypes'
 import TodoItem from './TodoItem'
 
 class Todolist extends Component {
@@ -20,20 +21,24 @@ class Todolist extends Component {
     // store发生变化时触发handleStoreChange函数
     store.subscribe(this.handleStoreChange)
   }
-  handleStoreChange() {
+  handleStoreChange () {
     // 把store里的数据，替换成最新的数据
     this.setState(store.getState())
   }
-  handleBtnClick() {
+  handleBtnClick () {
     // console.log(this) //undefined
     if (this.state.inputValue.trim()) {
       this.setState((prevState) => ({
         list: [...prevState.list, prevState.inputValue],
         inputValue: ''
       }))
+      const action = {
+        type: ADD_TODO_ITEM
+      }
+      store.dispatch(action)
     }
   }
-  handleInputChange(e) {
+  handleInputChange (e) {
     // this.setState({
     //   inputValue: e.target.value
     // })
@@ -43,23 +48,28 @@ class Todolist extends Component {
       inputValue: value
     }))
     const action = {
-      type: 'change_input_value',
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     }
     store.dispatch(action)
   }
-  handleDelete(index) {
+  handleDelete (index) {
     this.setState((prevState) => {
       const list = [...prevState.list]
       list.splice(index, 1)
       return { list }
     })
+    const action = {
+      type: DELETE_TODO_ITEM,
+      index: index
+    }
+    store.dispatch(action)
   }
-  handleKeyEnter(e) {
+  handleKeyEnter (e) {
     if (e.which && e.which !== 13) return
     this.handleBtnClick()
   }
-  getTodoItems() {
+  getTodoItems () {
     return (
       this.state.list.map((item, index) => {
         // console.log(this) //Todolist
@@ -74,7 +84,7 @@ class Todolist extends Component {
       })
     )
   }
-  render() {
+  render () {
     return (
       <Fragment>
         {/*jsx的注释写法,fragment是占位符*/}
