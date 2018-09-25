@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Button } from 'antd'
 
 class TodoItem extends Component {
   constructor(props) {
@@ -21,7 +22,10 @@ class TodoItem extends Component {
   render () {
     const { content } = this.props
     return (
-      <div>{content} <button onClick={this.handleDelete}>X</button></div>
+      <div className="todo-cont">
+        <span className="todo-item">{content}</span>
+        <Button type="danger" onClick={this.handleDelete}>删除</Button>
+      </div>
     )
   }
 }

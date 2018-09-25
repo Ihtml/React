@@ -72,9 +72,9 @@ class Todolist extends Component {
             onKeyPress={this.handleKeyEnter}
             style={{ width: 300, marginRight: 10 }}
           />
-          <Button type="primary" onClick={this.handleBtnClick}>add</Button>
+          <Button type="primary" onClick={this.handleBtnClick}>添加</Button>
         </div>
-        <ul>
+        <ul style={{ marginTop: 10, marginLeft: 10 }}>
           {this.getTodoItems()}
         </ul>
       </Fragment>
