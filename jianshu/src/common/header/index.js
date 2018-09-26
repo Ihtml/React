@@ -1,7 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
-import { getSearchFocusAction, getSearchBlurAction} from '../../store/actionCreator'
+import { actionCreators } from './store'
 import {
   HeaderWrapper,
   Logo,
@@ -54,18 +54,18 @@ const Header = (props) => {
 // 把store里的数据通过props传递给组件
 const mapStateToProps = (state) => {
   return {
-    focused: state.focused
+    focused: state.header.focused
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus () {
-      const action = getSearchFocusAction()
+      const action = actionCreators.getSearchFocusAction()
       dispatch(action)
     },
     handleInputBlur () {
-      const action = getSearchBlurAction()
+      const action = actionCreators.getSearchBlurAction()
       dispatch(action)
     }
   }
