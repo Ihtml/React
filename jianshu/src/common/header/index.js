@@ -54,7 +54,7 @@ const Header = (props) => {
 // 把store里的数据通过props传递给组件
 const mapStateToProps = (state) => {
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused')
   }
 }
 
