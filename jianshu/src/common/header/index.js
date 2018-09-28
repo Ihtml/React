@@ -54,7 +54,10 @@ const Header = (props) => {
 // 把store里的数据通过props传递给组件
 const mapStateToProps = (state) => {
   return {
-    focused: state.header.get('focused')
+    // focused: state.header.get('focused') //header是immutable
+    // 使用redux-immutable后，现在state也是immutable对象
+    focused: state.getIn(['header', 'focused']) 
+    // focused: state.get('header').get('focused') 和上面的写法作用一样
   }
 }
 
