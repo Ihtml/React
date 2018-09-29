@@ -2,7 +2,8 @@ import * as constans from './actionTypes'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
-  focused: false
+  focused: false,
+  list: [] //list也是一个immutable数组
 })
 
 export default (state = defaultState, action) => {
@@ -13,6 +14,9 @@ export default (state = defaultState, action) => {
   }
   if (action.type === constans.SEARCH_BLUR){
     return state.set('focused', false)
+  } 
+  if (action.type === constans.CHANGE_LIST){
+    return state.set('list', action.data)
   }
   return state
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 import { actionCreators } from './store'
@@ -18,8 +18,8 @@ import {
   SearchWrapper
 } from './style'
 
-// 把header变成一个无状态组件
-const Header = (props) => {
+class Header extends Component {
+  render () {
     return (
       <HeaderWrapper>
         <Logo href='/' />
@@ -32,29 +32,28 @@ const Header = (props) => {
           </NavItem>
           <SearchWrapper>
             <CSSTransition
-              in={props.focused}
+              in={this.props.focused}
               timeout={400}
               classNames="slide"
             >
               <NavSearch 
-              className={props.focused ? 'focused' : ''} 
-              onFocus={props.handleInputFocus}
-              onBlur={props.handleInputBlur}
+              className={this.props.focused ? 'focused' : ''} 
+              onFocus={this.props.handleInputFocus}
+              onBlur={this.props.handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <i className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe614;</i>
-            <SearchInfo className={props.focused ? '' : 'dn'}>
+            <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe614;</i>
+            <SearchInfo className={this.props.focused ? '' : 'dn'}>
               <SearchInfoTitle>
                 热门搜索
                 <SearchInfoSwitch>换一批</SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>教育</SearchInfoItem>
-                <SearchInfoItem>教育</SearchInfoItem>
+                {
+                  this.props.list.map((item) => {
+                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+                  })
+                }
               </SearchInfoList>
             </SearchInfo>
           </SearchWrapper>
@@ -68,23 +67,27 @@ const Header = (props) => {
         </Nav>
       </HeaderWrapper>
     )
+  }
 }
+
 
 // 把store里的数据通过props传递给组件
 const mapStateToProps = (state) => {
   return {
     // focused: state.header.get('focused') //header是immutable
     // 使用redux-immutable后，现在state也是immutable对象
-    focused: state.getIn(['header', 'focused']) 
+    focused: state.getIn(['header', 'focused']),
     // focused: state.get('header').get('focused') 和上面的写法作用一样
+    list: state.getIn(['header', 'list'])
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus () {
-      const action = actionCreators.getSearchFocusAction()
-      dispatch(action)
+      dispatch(actionCreators.getSearchFocusAction())
+      // ajax发送请求获取推荐数据
+      dispatch(actionCreators.getList())
     },
     handleInputBlur () {
       const action = actionCreators.getSearchBlurAction()
