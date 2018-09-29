@@ -20,14 +20,20 @@ import {
 
 class Header extends Component {
   render () {
-    const {focused, list, page, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave} = this.props
+    const {focused, list, page, totalPage, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage} = this.props
     const newList = list.toJS() //把immutable对象转化成普通对象,才能newList[i]
     const pageList = []
-    for (let i = (page -1) * 10; i < page * 10; i++) {
-      pageList.push(
-        <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
-      )
+    // ajax获取到数据后，才做渲染
+    if (newList.length) {
+      for (let i = (page -1) * 10; i < page * 10; i++) {
+        if (newList[i]) {
+          pageList.push(
+            <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+          )
+        }
+      }
     }
+    
     return (
       <HeaderWrapper>
         <Logo href='/' />
@@ -54,7 +60,7 @@ class Header extends Component {
             <SearchInfo className={focused || mouseIn ? '' : 'dn'} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <SearchInfoTitle>
                 热门搜索
-                <SearchInfoSwitch>换一批</SearchInfoSwitch>
+                <SearchInfoSwitch onClick={() => {handleChangePage(page, totalPage)}}>换一批</SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
                 {pageList}
@@ -84,6 +90,7 @@ const mapStateToProps = (state) => {
     // focused: state.get('header').get('focused') 和上面的写法作用一样
     list: state.getIn(['header', 'list']),
     page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
     mouseIn: state.getIn(['header', 'mouseIn'])
   }
 }
@@ -104,6 +111,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleMouseLeave () {
       dispatch(actionCreators.mouseLeave())
+    },
+    handleChangePage (page, totalPage) {
+      if (page < totalPage) {
+        dispatch(actionCreators.changePage(page +1))
+      } else {
+        dispatch(actionCreators.changePage(1))
+      }
+      
     }
   }
 }

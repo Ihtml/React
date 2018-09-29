@@ -20,6 +20,10 @@ export const mouseEnter = () => ({
 export const mouseLeave = () => ({
   type: constans.MOUSE_LEAVE
 })
+export const changePage = (page) => ({
+  type: constans.CHANGE_PAGE,
+  page
+})
 // 使用redux-thunk返回函数
 export  const getList = () => {
   return (dispatch) => {

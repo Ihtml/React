@@ -18,11 +18,17 @@ export default (state = defaultState, action) => {
     case constans.SEARCH_BLUR :
       return state.set('focused', false)
     case constans.CHANGE_LIST :
-      return state.set('list', action.data).set('totalPage', action.totalPage)
+      // 要修改的数据多时，可以用merge方法
+      return state.merge({
+        list: action.data,
+        totalPage: action.totalPage
+      })
     case constans.MOUSE_ENTER :
       return state.set('mouseIn', true)
     case constans.MOUSE_LEAVE :
       return state.set('mouseIn', false)
+    case constans.CHANGE_PAGE :
+      return state.set('page', action.page)
     default:
       return state
   }
