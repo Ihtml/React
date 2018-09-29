@@ -3,7 +3,10 @@ import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
   focused: false,
-  list: [] //list也是一个immutable数组
+  mouseIn: false,
+  list: [], //list也是一个immutable数组
+  page: 1,
+  totalPage: 1
 })
 
 export default (state = defaultState, action) => {
@@ -15,7 +18,11 @@ export default (state = defaultState, action) => {
     case constans.SEARCH_BLUR :
       return state.set('focused', false)
     case constans.CHANGE_LIST :
-      return state.set('list', action.data)
+      return state.set('list', action.data).set('totalPage', action.totalPage)
+    case constans.MOUSE_ENTER :
+      return state.set('mouseIn', true)
+    case constans.MOUSE_LEAVE :
+      return state.set('mouseIn', false)
     default:
       return state
   }

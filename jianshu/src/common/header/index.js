@@ -20,7 +20,14 @@ import {
 
 class Header extends Component {
   render () {
-    const {focused, list, handleInputFocus, handleInputBlur} = this.props
+    const {focused, list, page, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave} = this.props
+    const newList = list.toJS() //把immutable对象转化成普通对象,才能newList[i]
+    const pageList = []
+    for (let i = (page -1) * 10; i < page * 10; i++) {
+      pageList.push(
+        <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+      )
+    }
     return (
       <HeaderWrapper>
         <Logo href='/' />
@@ -44,17 +51,13 @@ class Header extends Component {
               ></NavSearch>
             </CSSTransition>
             <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe614;</i>
-            <SearchInfo className={focused ? '' : 'dn'}>
+            <SearchInfo className={focused || mouseIn ? '' : 'dn'} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <SearchInfoTitle>
                 热门搜索
                 <SearchInfoSwitch>换一批</SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
-                {
-                  list.map((item) => {
-                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                  })
-                }
+                {pageList}
               </SearchInfoList>
             </SearchInfo>
           </SearchWrapper>
@@ -79,7 +82,9 @@ const mapStateToProps = (state) => {
     // 使用redux-immutable后，现在state也是immutable对象
     focused: state.getIn(['header', 'focused']),
     // focused: state.get('header').get('focused') 和上面的写法作用一样
-    list: state.getIn(['header', 'list'])
+    list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    mouseIn: state.getIn(['header', 'mouseIn'])
   }
 }
 
@@ -93,6 +98,12 @@ const mapDispatchToProps = (dispatch) => {
     handleInputBlur () {
       const action = actionCreators.getSearchBlurAction()
       dispatch(action)
+    },
+    handleMouseEnter () {
+      dispatch(actionCreators.mouseEnter())
+    },
+    handleMouseLeave () {
+      dispatch(actionCreators.mouseLeave())
     }
   }
 }
