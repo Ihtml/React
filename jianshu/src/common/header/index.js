@@ -8,6 +8,11 @@ import {
   Nav,
   NavItem,
   NavSearch,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoList,
+  SearchInfoItem,
   Addition,
   Button,
   SearchWrapper
@@ -38,6 +43,20 @@ const Header = (props) => {
               ></NavSearch>
             </CSSTransition>
             <i className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe614;</i>
+            <SearchInfo className={props.focused ? '' : 'dn'}>
+              <SearchInfoTitle>
+                热门搜索
+                <SearchInfoSwitch>换一批</SearchInfoSwitch>
+              </SearchInfoTitle>
+              <SearchInfoList>
+                <SearchInfoItem>教育</SearchInfoItem>
+                <SearchInfoItem>教育</SearchInfoItem>
+                <SearchInfoItem>教育</SearchInfoItem>
+                <SearchInfoItem>教育</SearchInfoItem>
+                <SearchInfoItem>教育</SearchInfoItem>
+                <SearchInfoItem>教育</SearchInfoItem>
+              </SearchInfoList>
+            </SearchInfo>
           </SearchWrapper>
           <Addition>
             <Button className='writting'>
