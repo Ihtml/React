@@ -112,10 +112,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleInputFocus (list) {
-      console.log(list)
-      (list.size === 0) && dispatch(actionCreators.getSearchFocusAction())
-      // ajax发送请求获取推荐数据
-      dispatch(actionCreators.getList())
+      dispatch(actionCreators.getSearchFocusAction());
+      // list为空时才发送请求
+      (list.size === 0) && dispatch(actionCreators.getList())
     },
     handleInputBlur () {
       const action = actionCreators.getSearchBlurAction()
