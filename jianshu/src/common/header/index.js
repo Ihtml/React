@@ -56,11 +56,14 @@ class Header extends Component {
               onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
-            <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe614;</i>
+            <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe614;</i>
             <SearchInfo className={focused || mouseIn ? '' : 'dn'} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <SearchInfoTitle>
                 热门搜索
-                <SearchInfoSwitch onClick={() => {handleChangePage(page, totalPage)}}>换一批</SearchInfoSwitch>
+                <SearchInfoSwitch onClick={() => {handleChangePage(page, totalPage, this.spinIcon)}}>
+                <i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
+                换一批
+                </SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
                 {pageList}
@@ -112,7 +115,17 @@ const mapDispatchToProps = (dispatch) => {
     handleMouseLeave () {
       dispatch(actionCreators.mouseLeave())
     },
-    handleChangePage (page, totalPage) {
+    handleChangePage (page, totalPage, spin) {
+        // 除了数字以外的字符串替换成空
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+      if (originAngle) {
+        // 字符串以十进制转换为数字
+        originAngle = parseInt(originAngle, 10)
+      } else {
+        originAngle = 0
+      }
+      // 使用js原生方法改变样式
+      spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)' // 字符串拼接
       if (page < totalPage) {
         dispatch(actionCreators.changePage(page +1))
       } else {
