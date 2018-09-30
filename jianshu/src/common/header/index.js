@@ -20,7 +20,18 @@ import {
 
 class Header extends Component {
   render () {
-    const {focused, list, page, totalPage, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage} = this.props
+    const {
+      focused,
+      list, 
+      page, 
+      totalPage, 
+      mouseIn, 
+      handleInputFocus, 
+      handleInputBlur, 
+      handleMouseEnter, 
+      handleMouseLeave, 
+      handleChangePage
+    } = this.props
     const newList = list.toJS() //把immutable对象转化成普通对象,才能newList[i]
     const pageList = []
     // ajax获取到数据后，才做渲染
@@ -52,7 +63,7 @@ class Header extends Component {
             >
               <NavSearch 
               className={focused ? 'focused' : ''} 
-              onFocus={handleInputFocus}
+              onFocus={() => handleInputFocus(list)}
               onBlur={handleInputBlur}
               ></NavSearch>
             </CSSTransition>
@@ -100,8 +111,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus () {
-      dispatch(actionCreators.getSearchFocusAction())
+    handleInputFocus (list) {
+      console.log(list)
+      (list.size === 0) && dispatch(actionCreators.getSearchFocusAction())
       // ajax发送请求获取推荐数据
       dispatch(actionCreators.getList())
     },
