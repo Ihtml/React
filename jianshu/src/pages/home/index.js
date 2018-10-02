@@ -1,9 +1,28 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
+import Topic from './components/Topic'
+import List from './components/List'
+import Writer from './components/Writer'
+import Recommend from './components/Recommend'
+import {
+  HomeWrapper,
+  HomeLeft,
+  HomeRight
+} from './style'
 
-class Home extends Comment {
+class Home extends Component {
   render() {
     return (
-      <div>home page</div>
+      <HomeWrapper>
+        <HomeLeft>
+          <img className='banner-img' src="" />
+          <Topic />
+          <List />
+        </HomeLeft>
+        <HomeRight>
+          <Recommend />
+          <Writer />
+        </HomeRight>
+      </HomeWrapper>
     )
   }
 }

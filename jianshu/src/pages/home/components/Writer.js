@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react'
 
-class Detail extends Component {
+class Writer extends Component {
   render() {
     return (
-      <Fragment>Detail </Fragment>
+      <Fragment>Writer </Fragment>
     )
   }
 }
 
-export default Detail
+export default Writer

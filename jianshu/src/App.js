@@ -13,8 +13,8 @@ class App extends Component {
           <Header />
           <BrowserRouter>
             <Fragment>
-              <Route path='/' exact Component={Home}></Route>
-              <Route path='/detail' exact Component={Detail}></Route>
+              <Route path='/' exact  component={Home}></Route>
+              <Route path='/detail' exact  component={Detail}></Route>
             </Fragment>
           </BrowserRouter>
         </Fragment>
