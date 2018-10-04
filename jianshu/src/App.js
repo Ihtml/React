@@ -6,18 +6,16 @@ import Home from './pages/home'
 import Detail from './pages/detail'
 import store from './store/index'
 class App extends Component {
-  render () {
+  render() {
     return (
       <Provider store={store}>
-        <Fragment>
-          <Header />
-          <BrowserRouter>
-            <Fragment>
-              <Route path='/' exact  component={Home}></Route>
-              <Route path='/detail' exact  component={Detail}></Route>
-            </Fragment>
-          </BrowserRouter>
-        </Fragment>
+        <BrowserRouter>
+          <Fragment>
+            <Header />
+            <Route path='/' exact component={Home}></Route>
+            <Route path='/detail' exact component={Detail}></Route>
+          </Fragment>
+        </BrowserRouter>
       </Provider>
     )
   }
