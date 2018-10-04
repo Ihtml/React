@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch) => {
     handleInputFocus (list) {
       dispatch(actionCreators.getSearchFocusAction());
       // list为空时才发送请求
-      (list.size === 0) && dispatch(actionCreators.getList())
+      (list.size === 0) && actionCreators.getList()(dispatch)
     },
     handleInputBlur () {
       const action = actionCreators.getSearchBlurAction()
