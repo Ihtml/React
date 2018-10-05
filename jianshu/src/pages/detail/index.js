@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import {connect} from 'react-redux'
 import {
   DetailWrapper,
   Header,
@@ -7,15 +8,18 @@ import {
 
 class Detail extends Component {
   render() {
+    const {title, content} = this.props
     return (
       <DetailWrapper>
-        <Header>东华凤九 落叶知秋</Header>
-        <Content>
-          这是文章的内容，一段很长的文字，这是文章的内容，一段很长的文字，这是文章的内容，一段很长的文字，
-        </Content>
+        <Header>{title}</Header>
+        <Content dangerouslySetInnerHTML={{__html: content}} />
       </DetailWrapper>
     )
   }
 }
 
-export default Detail
+const mapState = (state) => ({
+  title: state.getIn(['detail', 'title']),
+  content: state.getIn(['detail', 'content'])
+})
+export default connect(mapState, null)(Detail) 
