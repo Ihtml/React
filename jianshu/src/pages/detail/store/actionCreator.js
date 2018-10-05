@@ -7,11 +7,11 @@ const changeDetail = (title, content) => ({
   title,
   content
 })
-export const getDetail = () => {
+export const getDetail = (id) => {
   return (dispatch) => {
-    axios.get('api/detail.json').then((res) => {
-      const result = res.data.data[0]
-      const title = result.title
+    axios.get('/api/detail.json?id=' + id).then((res) => {
+      const result = res.data.data
+      const title = result.title + " id为:" + id
       const content = result.content
       const action = changeDetail(title, content)
       dispatch(action)
