@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as constants from './actionTypes'
-import {fromJS} from 'immutable'
 
 const changeDetail = (title, content) => ({
   type: constants.CHANGE_DETAIL,
