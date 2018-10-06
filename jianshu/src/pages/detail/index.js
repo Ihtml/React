@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import {connect} from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {actionCreators} from './store'
 import {
   DetailWrapper,
@@ -32,4 +33,5 @@ const mapDispatch = (dispatch) => ({
     dispatch(actionCreators.getDetail(id))
   }
 })
-export default connect(mapState, mapDispatch)(Detail) 
+// 让Detail有能力获得所有Router里的参数和内容
+export default connect(mapState, mapDispatch)(withRouter(Detail)) 
