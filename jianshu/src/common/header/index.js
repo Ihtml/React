@@ -55,7 +55,9 @@ class Header extends Component {
           <Logo />
         </Link>
         <Nav>
+          <Link to="/">
           <NavItem className='fl active'>首页</NavItem>
+          </Link>
           <NavItem className='fl'>下载App</NavItem>
           {
             login ? <NavItem className='fr' onClick={logout}>退出</NavItem> :
