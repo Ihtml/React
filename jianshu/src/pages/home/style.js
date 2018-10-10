@@ -57,6 +57,16 @@ export const ListItem = styled.div`
     border-radius: 10px;
   }
 `
+export const MoreItems = styled.a.attrs({
+  target: '_blank'
+})`
+  display: inline-block;
+  margin-top: 7px;
+  margin-left: 18px;
+  font-size: 14px;
+  color: #787878;
+  cursor: pointer;
+`
 export const ListInfo = styled.div`
   width: 500px;
   float: left;

@@ -3,6 +3,7 @@ import * as constants from './actionTypes'
 
 const defaultState = fromJS({
   topicList: [],
+  moreTopicLinkUrl:'',
   articList: [],
   recommendList: [],
   articPage: 1,
@@ -13,7 +14,8 @@ const changeHomeDate = (state, action) => {
   return state.merge({
     topicList: fromJS(action.topicList),
     articList: fromJS(action.articList),
-    recommendList: fromJS(action.recommendList)
+    recommendList: fromJS(action.recommendList),
+    moreTopicLinkUrl: action.moreTopicLinkUrl
   })
 }
 const addArticList = (state, action) => {

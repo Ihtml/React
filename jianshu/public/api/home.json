@@ -13,6 +13,7 @@
         "imgUrl": "https://upload.jianshu.io/collections/images/83/1.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/64/h/64"
       }
     ],
+    "moreTopicLinkUrl": "https://www.jianshu.com/recommendations/collections?utm_medium=index-collections&utm_source=desktop",
     "articList": [
       {
         "id": 1,
@@ -36,7 +37,7 @@
     "recommendList": [
       {
         "id": 1,
-        "imgUrl": "http://cdn2.jianshu.io/assets/web/banner-s-3-7123fd94750759acf7eca05b871e9d17.png"
+        "imgUrl": "https://cdn2.jianshu.io/assets/web/banner-s-3-7123fd94750759acf7eca05b871e9d17.png"
       },
       {
         "id": 2,

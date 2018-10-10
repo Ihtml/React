@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import {TopicWrapper, TopicItem} from '../style'
+import {TopicWrapper, TopicItem, MoreItems} from '../style'
 class Topic extends PureComponent {
   render() {
-    const {list} = this.props
+    const {list, moreTopicLinkUrl} = this.props
     return (
       <TopicWrapper>
         {
@@ -20,12 +20,14 @@ class Topic extends PureComponent {
             )
           })
         }
+        <MoreItems href={moreTopicLinkUrl}>更多热门专题 ></MoreItems>
       </TopicWrapper>
     )
   }
 }
 
 const mapState = (state) => ({
-  list: state.get('home').get('topicList')
+  list: state.get('home').get('topicList'),
+  moreTopicLinkUrl: state.getIn(['home','moreTopicLinkUrl'])
 })
 export default connect(mapState, null)(Topic)
