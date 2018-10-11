@@ -20,7 +20,7 @@ class Topic extends PureComponent {
             )
           })
         }
-        <MoreItems href={moreTopicLinkUrl}>更多热门专题 ></MoreItems>
+        <MoreItems href={moreTopicLinkUrl}>更多热门专题<i className="iconfont more-topic">&#xe6c7;</i></MoreItems>
       </TopicWrapper>
     )
   }
