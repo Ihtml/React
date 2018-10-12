@@ -7,7 +7,10 @@ const defaultState = fromJS({
   articList: [],
   recommendList: [],
   articPage: 1,
-  showScroll: false
+  showScroll: false,
+  writerList: [],
+  writerPage: 1,
+  writerTotalPage: 1
 })
 
 const changeHomeDate = (state, action) => {
@@ -34,6 +37,13 @@ export default (state = defaultState, action) => {
       return addArticList(state, action)
     case constants.TOGGLE_SCROLL_TOP:
       return state.set('showScroll', action.show)
+    case constants.CHANGE_WRITER_LIST:
+      return state.merge({
+        writerList: action.data,
+        writerTotalPage: action.writerTotalPage
+      })
+    case constants.CHANGE_WRITER_PAGE :
+      return state.set('writerPage', action.page)
     default:
       return state
   }

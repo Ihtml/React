@@ -14,6 +14,11 @@ const addHomeList = (list, nextPage) => ({
   list: fromJS(list),
   nextPage
 })
+const changeWriterList = (data) => ({
+  type: constants.CHANGE_WRITER_LIST,
+  data: fromJS(data),  // 把接口返回的普通对象data变成immutable类型
+  writerTotalPage: Math.ceil(data.length /5)
+})
 export const getHomeInfo = () => {
   return (dispatch) => {
     axios.get('api/home.json').then((res) => {
@@ -34,6 +39,21 @@ export const getMoreList = (page) => {
   }
 }
 
+export const changeWriterPage = (page) => ({
+  type: constants.CHANGE_WRITER_PAGE,
+  page
+})
+
+export  const getWriterList = () => {
+  return (dispatch) => {
+    axios.get('api/writerList.json').then((res) => {
+      const data = res.data.data
+      dispatch(changeWriterList(data))
+    }).catch(() => {
+      console.log('get headerList error')
+    })
+  }
+} 
 export const toggleTopShow = (show) => ({
   type: constants.TOGGLE_SCROLL_TOP,
   show
