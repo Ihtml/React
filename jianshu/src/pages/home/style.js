@@ -197,6 +197,7 @@ export const MoreWriter = styled.a`
 `
 export const DownloadBox = styled.a`
   display: block;
+  position: relative;
   margin-bottom: 30px;
   padding: 10px 22px;
   width: 100%;
@@ -223,4 +224,25 @@ export const DownloadBox = styled.a`
     font-size: 13px;
     color: #999;
   }
+`
+export const Qrcode = styled.div`
+  &.slide-enter {
+    transition: all .4s ease-out;
+  }
+  &.slide-exit {
+    transition: all .4s ease-out;
+  }
+  position: absolute;
+  left: 40px;
+  top: -205px;
+  width: 150px;
+  height: 150px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  img{
+    width: 100%;
+    height: 100%;
+}
 `

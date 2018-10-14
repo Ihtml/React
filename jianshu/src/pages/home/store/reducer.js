@@ -10,7 +10,8 @@ const defaultState = fromJS({
   showScroll: false,
   writerList: [],
   writerPage: 1,
-  writerTotalPage: 1
+  writerTotalPage: 1,
+  isDownloadHover: false
 })
 
 const changeHomeDate = (state, action) => {
@@ -44,6 +45,8 @@ export default (state = defaultState, action) => {
       })
     case constants.CHANGE_WRITER_PAGE :
       return state.set('writerPage', action.page)
+    case constants.TOGGLE_QRCODE_SHOW :
+      return state.set('isDownloadHover', action.show)
     default:
       return state
   }

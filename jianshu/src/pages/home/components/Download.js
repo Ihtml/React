@@ -1,14 +1,23 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent} from 'react'
 import { connect } from 'react-redux'
-import { DownloadBox } from '../style'
+import { DownloadBox, Qrcode } from '../style'
 import { actionCreators } from '../store'
-import { Link } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 
 class Download extends PureComponent {
   render() {
-    const {} = this.props
+    const { isDownloadHover, isMouseEnter } = this.props
     return (
-      <DownloadBox href="https://www.jianshu.com/apps?utm_medium=desktop&utm_source=index-aside-click">
+      <DownloadBox onMouseEnter={() => { isMouseEnter(true) }} onMouseLeave={() => { isMouseEnter(false) }} href="https://www.jianshu.com/apps?utm_medium=desktop&utm_source=index-aside-click">
+        <CSSTransition
+          in={isDownloadHover}
+          timeout={400}
+          classNames="slide"
+        >
+          <Qrcode className={isDownloadHover ? '' : ' dn'}>
+            <img src="https://cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="download" />
+          </Qrcode>
+        </CSSTransition>
         <img src="https://cdn2.jianshu.io/assets/web/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="download" />
         <div className="info" >
           <div className="title">
@@ -22,7 +31,17 @@ class Download extends PureComponent {
 }
 
 const mapState = (state) => ({
+  isDownloadHover: state.getIn(['home', 'isDownloadHover'])
 })
 const mapDispatch = (dispatch) => ({
+  isMouseEnter(flag) {
+    if (flag) {
+      console.log('in')
+      dispatch(actionCreators.toggleQrcodeShow(true))
+    } else {
+      console.log('out')
+      dispatch(actionCreators.toggleQrcodeShow(false))
+    }
+  }
 })
 export default connect(mapState, mapDispatch)(Download)

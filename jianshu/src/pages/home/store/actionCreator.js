@@ -58,3 +58,7 @@ export const toggleTopShow = (show) => ({
   type: constants.TOGGLE_SCROLL_TOP,
   show
 })
+export const toggleQrcodeShow = (show) => ({
+  type: constants.TOGGLE_QRCODE_SHOW,
+  show
+})
