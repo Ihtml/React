@@ -195,3 +195,32 @@ export const MoreWriter = styled.a`
   text-align: center;
   cursor: pointer;
 `
+export const DownloadBox = styled.a`
+  display: block;
+  margin-bottom: 30px;
+  padding: 10px 22px;
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  background-color: #fff;
+  img{
+    width: 60px;
+    height: 60px;
+    opacity: .85;
+    vertical-align: middle;
+  }
+  .info{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 7px;
+  }
+  .title{
+    ont-size: 15px;
+    color: #333;
+  }
+  .description{
+    margin-top: 4px;
+    font-size: 13px;
+    color: #999;
+  }
+`

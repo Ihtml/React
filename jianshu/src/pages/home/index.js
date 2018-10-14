@@ -12,6 +12,7 @@ import {
   HomeLeft,
   HomeRight
 } from './style'
+import Download from './components/Download';
 
 class Home extends PureComponent {
   handleScrollTop() {
@@ -27,6 +28,7 @@ class Home extends PureComponent {
         </HomeLeft>
         <HomeRight>
           <Recommend />
+          <Download />
           <Writer />
         </HomeRight>
         {
