@@ -18,11 +18,11 @@ export const Logo = styled.div`
   background-size: contain;
 `
 export const Nav = styled.div`
-  width: 960px;
+  width: 75%;
   height: 100%;
   padding-right: 70px;
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 210px 0 100px;
 `
 export const NavItem = styled.div`
   line-height: 56px;

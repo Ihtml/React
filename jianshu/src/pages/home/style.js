@@ -204,6 +204,7 @@ export const DownloadBox = styled.a`
   border: 1px solid #f0f0f0;
   border-radius: 6px;
   background-color: #fff;
+  box-sizing: border-box;
   img{
     width: 60px;
     height: 60px;
